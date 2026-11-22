@@ -1,1 +1,335 @@
-<html></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Corrosion / 语言腐蚀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body class="theme-dark lang-en">
+  <!-- Film Grain SVG Filter Overlay -->
+  <svg class="svg-filters" aria-hidden="true">
+    <filter id="film-grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
+  </svg>
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true"></div>
+
+  <!-- Global Top-Right Control Bar -->
+  <header class="top-controls" role="navigation" aria-label="Global controls">
+    <button id="btn-lang" class="ctrl-btn" type="button" title="Switch Language">
+      <span class="lang-opt" data-lang="en">EN</span>
+      <span class="ctrl-sep">/</span>
+      <span class="lang-opt" data-lang="zh">中文</span>
+    </button>
+
+    <button id="btn-sound" class="ctrl-btn" type="button" title="Toggle Sound">
+      <span id="sound-label">Sound: ON</span>
+    </button>
+
+    <div class="scene-menu-wrap">
+      <button id="btn-scenes" class="ctrl-btn" type="button" aria-expanded="false" aria-controls="scene-dropdown">
+        <span data-i18n="ui.scenes">Scenes</span> <span class="caret">▾</span>
+      </button>
+      <ul id="scene-dropdown" class="scene-dropdown" role="menu" hidden>
+        <li role="menuitem"><button type="button" data-goto="0" data-i18n="menu.s0">0 · Language Corrosion</button></li>
+        <li role="menuitem"><button type="button" data-goto="1" data-i18n="menu.s1">1 · Lexical Junkyard</button></li>
+        <li role="menuitem"><button type="button" data-goto="2" data-i18n="menu.s2">2 · Choose an Image</button></li>
+        <li role="menuitem"><button type="button" data-goto="3" data-i18n="menu.s3">3 · Foggy Window</button></li>
+        <li role="menuitem"><button type="button" data-goto="4" data-i18n="menu.s4">4 · Birthday Card</button></li>
+        <li role="menuitem"><button type="button" data-goto="5" data-i18n="menu.s5">5 · Crumpled Paper</button></li>
+        <li role="menuitem"><button type="button" data-goto="6" data-i18n="menu.s6">6 · The Sea</button></li>
+        <li role="menuitem"><button type="button" data-goto="7" data-i18n="menu.s7">7 · Kaleidoscope</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Viewport Stage -->
+  <main id="stage" class="stage">
+
+    <!-- ==================== SCENE 0: WELCOME ==================== -->
+    <section id="scene-0" class="scene scene-welcome active" data-scene="0" aria-label="Welcome">
+      <div class="welcome-composition" id="welcome-center">
+        <span class="welcome-word welcome-left" data-i18n="s0.left">Language</span>
+
+        <div class="welcome-figure" id="welcome-figure">
+          <img class="fig-layer fig-person" src="Assets/images/人.png" alt="Reader portrait" draggable="false" />
+          <img class="fig-layer fig-book" src="Assets/images/书.png" alt="Open book" draggable="false" />
+          <img class="fig-layer fig-hands" src="Assets/images/手.png" alt="Hands holding book" draggable="false" />
+        </div>
+
+        <span class="welcome-word welcome-right" id="welcome-corrosion" data-i18n="s0.right">Corrosion</span>
+      </div>
+
+      <button type="button" class="bottom-hint breathing" id="s0-enter-btn" data-i18n="s0.hint">
+        [ Scroll down or click to enter ]
+      </button>
+    </section>
+
+    <!-- ==================== SCENE 1: TRANSITION / JUNKYARD ==================== -->
+    <section id="scene-1" class="scene scene-transition" data-scene="1" aria-label="Sentence Collapse">
+      <div class="s1-progress-bar"><div id="s1-progress-fill" class="s1-progress-fill"></div></div>
+
+      <div class="s1-sentence-stage" id="s1-sentence-stage">
+        <div id="s1-tokens" class="s1-tokens"></div>
+        <div id="s1-haha" class="s1-haha" data-i18n="s1.haha">“Haha”</div>
+      </div>
+
+      <div class="s1-junkyard" id="s1-junkyard">
+        <div class="junkyard-title" data-i18n="s1.junkyardTitle">Lexical Junkyard</div>
+        <div class="junkyard-pile" id="junkyard-pile"></div>
+      </div>
+
+      <button type="button" class="bottom-hint breathing" id="s1-next-btn" data-i18n="s1.hint">
+        [ Move closer, scroll down, or click to continue ]
+      </button>
+    </section>
+
+    <!-- ==================== SCENE 2: HUB ==================== -->
+    <section id="scene-2" class="scene scene-hub" data-scene="2" aria-label="Choose an Image">
+      <p class="scene-top-guide" data-i18n="s2.guide">Select a floating image to enter a slice of aphasia</p>
+
+      <div class="hub-canvas" id="hub-canvas">
+        <button type="button" class="hub-card hub-pos-1" data-target="3">
+          <span class="hub-visited-mark" data-i18n="s2.visited">Visited</span>
+          <div class="hub-thumb thumb-window">
+            <img src="Assets/images/雾气车窗.png" alt="Foggy Window" draggable="false" />
+          </div>
+          <span class="hub-title" data-i18n="s2.c1Title">Foggy Window</span>
+          <span class="hub-emotion" data-i18n="s2.c1Sub">Helplessness</span>
+        </button>
+
+        <button type="button" class="hub-card hub-pos-2" data-target="5">
+          <span class="hub-visited-mark" data-i18n="s2.visited">Visited</span>
+          <div class="hub-thumb thumb-paper">
+            <img src="Assets/images/纸团.png" alt="Crumpled Paper" draggable="false" />
+          </div>
+          <span class="hub-title" data-i18n="s2.c3Title">Crumpled Paper</span>
+          <span class="hub-emotion" data-i18n="s2.c3Sub">Wronged</span>
+        </button>
+
+        <button type="button" class="hub-card hub-pos-3" data-target="4">
+          <span class="hub-visited-mark" data-i18n="s2.visited">Visited</span>
+          <div class="hub-thumb thumb-cake">
+            <img src="Assets/images/草莓拼贴巧克力生日蛋糕.png" alt="Birthday Card" draggable="false" />
+          </div>
+          <span class="hub-title" data-i18n="s2.c2Title">Birthday Card</span>
+          <span class="hub-emotion" data-i18n="s2.c2Sub">Invisible Wall</span>
+        </button>
+
+        <button type="button" class="hub-card hub-pos-4" data-target="7">
+          <span class="hub-visited-mark" data-i18n="s2.visited">Visited</span>
+          <div class="hub-thumb thumb-kaleido">
+            <canvas id="hub-kaleido-preview" width="160" height="160"></canvas>
+          </div>
+          <span class="hub-title" data-i18n="s2.c5Title">Kaleidoscope</span>
+          <span class="hub-emotion" data-i18n="s2.c5Sub">Envy</span>
+        </button>
+
+        <button type="button" class="hub-card hub-pos-5" data-target="6">
+          <span class="hub-visited-mark" data-i18n="s2.visited">Visited</span>
+          <div class="hub-thumb thumb-sea">
+            <canvas id="hub-sea-preview" width="160" height="160"></canvas>
+          </div>
+          <span class="hub-title" data-i18n="s2.c4Title">The Sea</span>
+          <span class="hub-emotion" data-i18n="s2.c4Sub">Loss</span>
+        </button>
+      </div>
+
+      <p class="hub-epilogue" id="hub-epilogue" data-i18n="s2.epilogue">
+        All five slices of silence collected — yet the words remain unspoken.
+      </p>
+    </section>
+
+    <!-- ==================== SCENE 3: EVENT 1 - FOGGY WINDOW ==================== -->
+    <section id="scene-3" class="scene scene-window" data-scene="3" aria-label="Event 1 Foggy Window">
+      <p class="scene-top-narration" data-i18n="s3.narration">
+        My friend was having a deep talk with me, yet I didn't know how to accurately express the view inside my heart.
+      </p>
+
+      <div class="window-viewport" id="s3-viewport">
+        <!-- Moving glass assembly (rolls down in Air-54, rolls up in Air-55) -->
+        <div class="window-glass-assembly" id="s3-glass-assembly">
+          <img class="window-clear-img" src="Assets/images/车窗.png" alt="Rainy car window" draggable="false" />
+          <div class="window-thoughts-layer" id="s3-thoughts"></div>
+          <canvas id="s3-fog-canvas" class="window-fog-canvas"></canvas>
+        </div>
+
+        <!-- Dark interior car door silhouette frame -->
+        <div class="window-frame-vignette" aria-hidden="true"></div>
+
+        <!-- Stage overlays: Air-54 prompt, Air-55 retreat, Air-56 compromise -->
+        <div class="window-stage-overlay" id="s3-overlay">
+          <div class="s3-question" id="s3-question" hidden>
+            <span class="s3-caret">|</span><span id="s3-question-text"></span>
+          </div>
+
+          <div class="s3-retreat" id="s3-retreat" hidden>
+            <span class="s3-retreat-left" data-i18n="s3.retreat1">“I just...”</span>
+            <span class="s3-retreat-right" data-i18n="s3.retreat2">“I don't know how to put it.”</span>
+          </div>
+
+          <div class="s3-finale" id="s3-finale" hidden>
+            <span data-i18n="s3.finale">“Never mind, hahaha”</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="s3-footer">
+        <span class="s3-hint" id="s3-hint" data-i18n="s3.hintWipe">Wipe the foggy window with your cursor</span>
+        <button type="button" class="inline-action-btn" id="s3-skip-btn" hidden data-i18n="s3.skipWipe">
+          Pause &amp; continue →
+        </button>
+      </div>
+
+      <button type="button" class="return-hub-btn" id="s3-return-btn" hidden data-i18n="ui.returnHub">
+        ← Return to Hub
+      </button>
+    </section>
+
+    <!-- ==================== SCENE 4: EVENT 2 - BIRTHDAY CARD ==================== -->
+    <section id="scene-4" class="scene scene-birthday" data-scene="4" aria-label="Event 2 Birthday Card">
+      <p class="scene-top-narration dark-text" data-i18n="s4.narration">
+        In front of intimacy, subtle truths feel too heavy — so we wrap them in the safest, most ordinary wishes.
+      </p>
+
+      <div class="birthday-stage" id="s4-stage">
+        <!-- Decorative dashed accents & ribbons -->
+        <div class="birthday-deco deco-ribbon-1" aria-hidden="true"></div>
+        <div class="birthday-deco deco-ribbon-2" aria-hidden="true"></div>
+        <div class="birthday-deco deco-sparkle-1" aria-hidden="true">✦</div>
+        <div class="birthday-deco deco-sparkle-2" aria-hidden="true">✿</div>
+
+        <!-- Central Collage Cake -->
+        <div class="cake-wrapper">
+          <img class="cake-img" src="Assets/images/草莓拼贴巧克力生日蛋糕.png" alt="Birthday Cake" draggable="false" />
+        </div>
+
+        <!-- Main Drop Target Card -->
+        <div class="drop-card-zone" id="s4-drop-zone">
+          <img class="drop-card-bg" src="Assets/images/粉色撕纸上的百合与纸夹.png" alt="Birthday Card" draggable="false" />
+          <div class="drop-card-content" id="s4-card-text" data-i18n="s4.cardPlaceholder">Drop your words here</div>
+        </div>
+
+        <!-- Draggable True Thoughts Layer -->
+        <div class="thoughts-drag-layer" id="s4-thoughts-layer"></div>
+
+        <!-- Proliferating Safe Greeting Cards Layer -->
+        <div class="proliferate-layer" id="s4-proliferate-layer"></div>
+      </div>
+
+      <div class="s4-hint" id="s4-hint" data-i18n="s4.hintDrag">
+        [ Drag the floating thoughts into the birthday card (or click) ]
+      </div>
+
+      <button type="button" class="return-hub-btn dark-btn" id="s4-return-btn" hidden data-i18n="ui.returnHub">
+        ← Return to Hub
+      </button>
+    </section>
+
+    <!-- ==================== SCENE 5: EVENT 3 - CRUMPLED PAPER ==================== -->
+    <section id="scene-5" class="scene scene-paper" data-scene="5" aria-label="Event 3 Crumpled Paper">
+      <p class="scene-top-narration dark-text" id="s5-guide" data-i18n="s5.guideClick">
+        [ Click the paper or press any key to reply ]
+      </p>
+
+      <div class="paper-stage" id="s5-stage">
+        <!-- Taped Flat/Creased Paper (Air-16, Air-29, Air-30, Air-32) -->
+        <div class="taped-paper" id="s5-paper">
+          <span class="tape tape-tl" aria-hidden="true"></span>
+          <span class="tape tape-tr" aria-hidden="true"></span>
+          <span class="tape tape-bl" aria-hidden="true"></span>
+          <span class="tape tape-br" aria-hidden="true"></span>
+
+          <!-- Dynamic SVG Crease Overlay -->
+          <svg class="paper-creases-svg" id="s5-creases" viewBox="0 0 600 420" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+          <div class="paper-inner">
+            <div class="paper-question" id="s5-question" data-i18n="s5.question">
+              “Isn't it just because you...?”
+            </div>
+
+            <div class="paper-typing" id="s5-typing" hidden>
+              <div class="paper-reply-prefix" id="s5-reply-prefix">
+                <span data-i18n="s5.replyPrefix">Reply: </span><span class="blink-caret">|</span>
+              </div>
+              <div class="paper-lines" id="s5-lines"></div>
+            </div>
+
+            <div class="paper-rebuttal" id="s5-rebuttal" hidden></div>
+          </div>
+        </div>
+
+        <!-- Crumpled Paper Ball (Air-31) -->
+        <div class="crumpled-ball-wrap" id="s5-ball-wrap" hidden>
+          <div class="clock-stamp">03:17 AM</div>
+          <img class="crumpled-ball-img" src="Assets/images/纸团.png" alt="Crumpled paper ball" draggable="false" />
+        </div>
+
+        <!-- Empty Regret Ending (Air-33) -->
+        <div class="paper-finale" id="s5-finale" hidden data-i18n="s5.finale">
+          Why didn't I think of that just now?
+        </div>
+      </div>
+
+      <button type="button" class="return-hub-btn dark-btn" id="s5-return-btn" hidden data-i18n="ui.returnHub">
+        ← Return to Hub
+      </button>
+    </section>
+
+    <!-- ==================== SCENE 6: EVENT 4 - THE SEA ==================== -->
+    <section id="scene-6" class="scene scene-sea" data-scene="6" aria-label="Event 4 The Sea">
+      <canvas id="s6-sea-canvas" class="full-canvas"></canvas>
+
+      <p class="scene-top-narration sea-text" id="s6-guide" data-i18n="s6.guide">
+        Click the sea to speak your mind
+      </p>
+
+      <div class="sea-finale" id="s6-finale" hidden data-i18n="s6.finale">
+        “Never mind, the sea won't answer anyway.”
+      </div>
+
+      <button type="button" class="return-hub-btn" id="s6-return-btn" hidden data-i18n="ui.returnHub">
+        ← Return to Hub
+      </button>
+    </section>
+
+    <!-- ==================== SCENE 7: EVENT 5 - KALEIDOSCOPE ==================== -->
+    <section id="scene-7" class="scene scene-kaleido" data-scene="7" aria-label="Event 5 Kaleidoscope">
+      <p class="scene-top-narration dark-text" id="s7-guide">
+        Click the kaleidoscope to catch their eloquence (0/5)
+      </p>
+
+      <div class="kaleido-stage" id="s7-stage">
+        <canvas id="s7-canvas" class="kaleido-canvas"></canvas>
+
+        <div class="kaleido-speech-bar" id="s7-speech-bar">
+          <span class="speech-bar-label" data-i18n="s7.myWords">My words:</span>
+          <span class="speech-bar-output" id="s7-speech-output">...</span>
+        </div>
+
+        <div class="kaleido-finale" id="s7-finale" hidden data-i18n="s7.finale">
+          “Flowers bloom from others' lips; only sand falls from mine.”
+        </div>
+      </div>
+
+      <button type="button" class="return-hub-btn dark-btn" id="s7-return-btn" hidden data-i18n="ui.returnHub">
+        ← Return to Hub
+      </button>
+    </section>
+
+  </main>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/scenes.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
