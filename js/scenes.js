@@ -49,12 +49,12 @@
         elCorrosion.classList.remove('glitching');
       }
 
-      // Subtle 3-layer parallax on 人 / 书 / 手
+      // Parallax: hands stay stationary, book moves with larger amplitude
       const nx = Math.max(-1, Math.min(1, dx / (window.innerWidth * 0.5)));
       const ny = Math.max(-1, Math.min(1, dy / (window.innerHeight * 0.5)));
       if (elPerson) elPerson.style.transform = `translate3d(${(nx * 4).toFixed(1)}px, ${(ny * 3).toFixed(1)}px, 0)`;
-      if (elBook)   elBook.style.transform   = `translate3d(${(nx * 9).toFixed(1)}px, ${(ny * 6).toFixed(1)}px, 0)`;
-      if (elHands)  elHands.style.transform  = `translate3d(${(nx * 14).toFixed(1)}px, ${(ny * 9).toFixed(1)}px, 0)`;
+      if (elBook)   elBook.style.transform   = `translate3d(${(nx * 18).toFixed(1)}px, ${(ny * 13).toFixed(1)}px, 0) rotate(${(nx * 2).toFixed(2)}deg)`;
+      if (elHands)  elHands.style.transform  = 'translate3d(0, 0, 0)';
     }
 
     function onWheel(e) {
